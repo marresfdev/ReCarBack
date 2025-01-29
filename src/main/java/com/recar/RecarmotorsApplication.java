@@ -1,4 +1,4 @@
-package com.recar.recarmotors;
+package com.recar;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
