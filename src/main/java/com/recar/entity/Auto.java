@@ -38,6 +38,7 @@ public class Auto {
     private String estatus;
     private double precio;
     private String ubicacion;
+    private String descripcion;
     private String imagen;
     private boolean activo;
 
