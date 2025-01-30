@@ -4,10 +4,13 @@
  */
 package com.recar.repository;
 
+import com.recar.entity.Simulador;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author fonse
  */
-public interface SimuladorRepository {
+public interface SimuladorRepository extends JpaRepository <Simulador, String> {
     
 }
