@@ -27,12 +27,13 @@ import lombok.Data;
 public class Auto {
 
     @Id
-    private String id;
+    private int id;
+    private String no_inv;
     private String submarca;
     private String transm;
     private int modelo;
     private String color;
-    private int km;
+    private Integer km;
     private String serie;
     private String estatus;
     private double precio;

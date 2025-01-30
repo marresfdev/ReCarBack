@@ -18,7 +18,7 @@ public class AutoController {
 
     @GetMapping("/getAllAutos")
     public List<Auto> getAllAutos(){
-        return autoRepository.findAll();
+        return autoRepository.findByEstatus("DISPONIBLE");
     }
 
 }
