@@ -20,5 +20,10 @@ public class AutoController {
     public List<Auto> getAllAutos(){
         return autoRepository.findByEstatus("DISPONIBLE");
     }
+    
+    @GetMapping("/getAuto/{id}")
+    public Optional<Auto> getAuto(@PathVariable String id){
+        return autoRepository.findById(id);
+    }
 
 }
