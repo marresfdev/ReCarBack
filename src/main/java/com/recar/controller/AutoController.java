@@ -44,7 +44,6 @@ public class AutoController {
             autoDTO.setActivo(auto.isActivo());
             autoDTO.setFechaRegistro(auto.getFechaRegistro());
 
-            // Si no quieres devolver las imágenes completas, solo las URLs
             List<String> imagenUrls = auto.getImagenes().stream()
                                             .map(AutoImagenes::getUrl)
                                             .collect(Collectors.toList());
@@ -56,30 +55,39 @@ public class AutoController {
     
     @GetMapping("/getAuto/{id}")
     public ResponseEntity<Map<String, Object>> getAuto(@PathVariable String id) {
-    Optional<Auto> optionalAuto = autoRepository.findAutoWithImages(id);
+        Optional<Auto> optionalAuto = autoRepository.findAutoWithImages(id);
 
-    if (optionalAuto.isEmpty()) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Auto no encontrado"));
-    }
+        if (optionalAuto.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Auto no encontrado"));
+        }
 
-    Auto auto = optionalAuto.get();
-    Map<String, Object> response = new HashMap<>();
+        Auto auto = optionalAuto.get();
+        Map<String, Object> response = new HashMap<>();
 
-    response.put("auto_id", auto.getId());
-    
-    // Si hay imágenes en la tabla auto_imagenes, las agrega a la lista
-    List<String> imagenesUrls = auto.getImagenes().stream()
-            .map(AutoImagenes::getUrl)
-            .toList();
+        response.put("auto_id", auto.getId());
+        response.put("submarca", auto.getSubmarca());
+        response.put("modelo", auto.getModelo());
+        response.put("precio", auto.getPrecio());
+        response.put("color", auto.getColor());
+        response.put("km", auto.getKm());
+        response.put("ubicacion", auto.getUbicacion());
+        response.put("transm", auto.getTransm());
+        response.put("estatus", auto.getEstatus());
+        response.put("serie", auto.getSerie());
+        response.put("descripcion", auto.getDescripcion());
+        response.put("imagen", auto.getImagen());
 
-    // Si no hay imágenes en auto_imagenes, usa la imagen por defecto de Auto
-    if (imagenesUrls.isEmpty()) {
-        imagenesUrls = List.of(auto.getImagen());
-    }
+        List<String> imagenesUrls = auto.getImagenes().stream()
+                .map(AutoImagenes::getUrl)
+                .collect(Collectors.toList());
 
-    response.put("imagenes", imagenesUrls);
+        if (imagenesUrls.isEmpty()) {
+            imagenesUrls = List.of(auto.getImagen());
+        }
 
-    return ResponseEntity.ok(response);
+        response.put("imagenes", imagenesUrls);
+
+        return ResponseEntity.ok(response);
     }
 
 }

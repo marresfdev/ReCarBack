@@ -30,7 +30,4 @@ public class AutoDTO {
     private boolean activo;
     private LocalDateTime fechaRegistro;
     private List<String> imagenes;  
-
-    // Getters y Setters
-
 }
