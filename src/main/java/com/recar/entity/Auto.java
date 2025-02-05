@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.recar.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,19 +26,60 @@ public class Auto {
 
     @Id
     private int id;
+
+    @Column(name = "no_inv")
+    @NotEmpty(message = "El número de inventario no puede estar vacío")
     private String no_inv;
+
+    @Column(name = "submarca")
+    @NotEmpty(message = "La submarca no puede estar vacía")
     private String submarca;
+
+    @Column(name = "transm")
+    @NotEmpty(message = "El tipo de transmisión no puede estar vacío")
     private String transm;
+
+    @Column(name = "modelo")
     private int modelo;
+
+    @Column(name = "color")
+    @NotEmpty(message = "El color no puede estar vacío")
     private String color;
+
+    @Column(name = "km")
     private Integer km;
+
+    @Column(name = "serie")
+    @NotEmpty(message = "El número de serie no puede estar vacío")
     private String serie;
+
+    @Column(name = "estatus")
+    @NotEmpty(message = "El estatus no puede estar vacío")
     private String estatus;
+
+    @Column(name = "precio")
     private double precio;
+
+    @Column(name = "ubicacion")
+    @NotEmpty(message = "La ubicación no puede estar vacía")
     private String ubicacion;
+
+    @Column(name = "descripcion")
+    @Size(max = 500, message = "La descripción no puede superar los 500 caracteres")
     private String descripcion;
+
+    @Column(name = "imagen")
     private String imagen;
+
+    @Column(name = "activo")
     private boolean activo;
 
-    // Getters y setters
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro = LocalDateTime.now(); // Fecha de registro al momento de la creación
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "auto_id")
+    private List<AutoImagenes> imagenes;
+
 }
+
