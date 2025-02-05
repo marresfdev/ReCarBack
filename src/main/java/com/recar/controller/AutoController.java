@@ -28,6 +28,7 @@ public class AutoController {
 
         return autos.stream().map(auto -> {
             AutoDTO autoDTO = new AutoDTO();
+            autoDTO.setId(auto.getId());
             autoDTO.setNoInv(auto.getNo_inv());
             autoDTO.setSubmarca(auto.getSubmarca());
             autoDTO.setTransm(auto.getTransm());

@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @Data
 public class AutoDTO {
-
+    private int id;
     private String noInv;
     private String submarca;
     private String transm;
