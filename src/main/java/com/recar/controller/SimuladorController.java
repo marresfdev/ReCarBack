@@ -20,12 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class SimuladorController {
     
     @PostMapping("/calcularCredito")
-    public String enviarCorreoFunc(@RequestParam("precio") int precio, @RequestParam("enganche") int enganche,
-            @RequestParam("plazo") int plazo, Model model) {
+    public Float enviarCorreoFunc(@RequestParam("precio") int precio, @RequestParam("enganche") int enganche,
+            @RequestParam("plazo") int plazo, @RequestParam("tasa") float tasa, Model model) {
         
+        float montoPrestamo = precio - enganche;
+        float tasaMensual = (tasa / 100) / 12;
+        
+        if (tasaMensual == 0) {
+        return montoPrestamo / plazo;
+        }
+        
+        float mensualidad = (montoPrestamo * tasaMensual) / (1 - (float) Math.pow(1 + tasaMensual, -plazo));
 
-
-        return null;
+        return mensualidad;
     }
 
     
