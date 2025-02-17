@@ -38,7 +38,12 @@ public class AutoController {
             autoDTO.setKm(auto.getKm());
             autoDTO.setSerie(auto.getSerie());
             autoDTO.setEstatus(auto.getEstatus());
-            autoDTO.setPrecio(auto.getPrecio());
+            
+            //Modificar el precio
+            double precioAuto = auto.getPrecio();
+            double engancheIn = calcularEnganche(precioAuto);
+            
+            autoDTO.setPrecio(engancheIn);
             autoDTO.setUbicacion(auto.getUbicacion());
             autoDTO.setDescripcion(auto.getDescripcion());
             autoDTO.setImagen(auto.getImagen());
@@ -68,7 +73,11 @@ public class AutoController {
         response.put("auto_id", auto.getId());
         response.put("submarca", auto.getSubmarca());
         response.put("modelo", auto.getModelo());
-        response.put("precio", auto.getPrecio());
+        //Calcular enganche
+        double precio = auto.getPrecio();
+        double enganche = calcularEnganche(precio);
+        response.put("precio", enganche);
+        //response.put("precio", auto.getPrecio());
         response.put("color", auto.getColor());
         response.put("km", auto.getKm());
         response.put("ubicacion", auto.getUbicacion());
@@ -89,6 +98,20 @@ public class AutoController {
         response.put("imagenes", imagenesUrls);
 
         return ResponseEntity.ok(response);
+    }
+    
+    public double calcularEnganche(double precio){
+        if (precio<250000){
+        double enganche = precio * 0.10;
+        return enganche;
+        } else if (precio>=250000 && precio<=350000){
+        double enganche = precio * 0.20;
+        return enganche;
+        } else if (precio>=350000){
+        double enganche = precio * 0.25;
+        return enganche;
+        }
+        return 1000000;
     }
 
 }
