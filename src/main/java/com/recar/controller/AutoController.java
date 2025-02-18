@@ -104,7 +104,7 @@ public class AutoController {
         if (precio<250000){
         double enganche = precio * 0.10;
         return enganche;
-        } else if (precio>=250000 && precio<=350000){
+        } else if (precio>=250000 && precio<350000){
         double enganche = precio * 0.20;
         return enganche;
         } else if (precio>=350000){
