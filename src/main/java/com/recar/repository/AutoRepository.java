@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 /**
  *
  * @author fonse
  */
+@Repository
 public interface AutoRepository extends JpaRepository<Auto, String> {
     // Filtra autos con estatus 'Disponible'
     List<Auto> findByEstatus(String estatus);
-    Optional<Auto> findById(String id);
+    Optional<Auto> findById(int id);
     @Query("SELECT a FROM Auto a LEFT JOIN FETCH a.imagenes WHERE a.id = :id")
     Optional<Auto> findAutoWithImages(@Param("id") String id);
-
-
 }
