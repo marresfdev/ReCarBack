@@ -23,19 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class SimuladorController {
-    @Autowired
+     @Autowired
     private AutoRepository repo;
     
     @PostMapping("/calcularCredito")
     public Double calcularCredito(@RequestBody CreditRequest creditRequest) {
-        //QUE SE MANDE EL ID DE LA UNIDAD Y QUE EN BASE A ESO SE BUSQUE EL PRECIO DE ESTA
-        //auto.getId();
-        //Auto autoExis = repo.findById(autoExis.getAuto());
         int id = creditRequest.getId();
         int enganche = creditRequest.getEnganche();
         double plazo = creditRequest.getPlazo();
         float tasa = creditRequest.getTasa();
         
+        // OBTENER EL PRECIO DEL AUTO
         Optional<Auto> newAuto = repo.findById(id);
         Auto autoEncontrado = newAuto.orElse(null);
         if (autoEncontrado == null) {
@@ -49,6 +47,16 @@ public class SimuladorController {
         }
 
         double montoPrestamo = precio - enganche;
+
+        // Seguro estimado (ajustable)
+        double seguros = precio * 0.2; // Promedio entre 5%-7%
+        montoPrestamo += seguros;
+
+        // Comisión por apertura (entre 1%-3%)
+        double comisionApertura = montoPrestamo * 0.15; // 2% como promedio
+        montoPrestamo += comisionApertura;
+
+        // Tasa mensual (nominal)
         double tasaMensual = (tasa / 100) / 12;
 
         // Si la tasa es 0, el cálculo es simple
@@ -61,8 +69,8 @@ public class SimuladorController {
             throw new IllegalArgumentException("El plazo debe ser mayor que 0.");
         }
 
-        // Cálculo de la mensualidad
-        double mensualidad = (montoPrestamo * tasaMensual) / (1 - (float) Math.pow(1 + tasaMensual, -plazo));
+        // Cálculo de la mensualidad con la fórmula de amortización francesa
+        double mensualidad = (montoPrestamo * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -plazo));
 
         return mensualidad;
     }
