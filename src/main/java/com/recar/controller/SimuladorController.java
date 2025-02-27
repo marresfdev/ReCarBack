@@ -49,11 +49,11 @@ public class SimuladorController {
         double montoPrestamo = precio - enganche;
 
         // Seguro estimado (ajustable)
-        double seguros = precio * 0.2; // Promedio entre 5%-7%
+        double seguros = precio * 0.1; // Promedio entre 5%-7%
         montoPrestamo += seguros;
 
         // Comisión por apertura (entre 1%-3%)
-        double comisionApertura = montoPrestamo * 0.15; // 2% como promedio
+        double comisionApertura = montoPrestamo * 0.1; // 2% como promedio
         montoPrestamo += comisionApertura;
 
         // Tasa mensual (nominal)
