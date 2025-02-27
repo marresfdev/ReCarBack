@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5174") //problemas de cors
@@ -31,5 +32,27 @@ public class EmailController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Correo enviado a: " + correoDestino);
         return ResponseEntity.ok().body(response);
+    }
+    
+    //ES ESTA LA FUNCIÓN QUE SE DEBE MODIFICAR
+    @PostMapping("/emailBuro")
+    public ResponseEntity<Map<String, String>> enviarCorreoBuro(
+            @RequestParam("contacto") String contacto,
+            @RequestParam("imagen") MultipartFile imagen) {
+
+        try {
+            String asunto = "Página Web ReCarMotors";
+            String mensaje = "Cliente: " + contacto;
+
+            emailService.enviarCorreoConImagen(correoDestino, asunto, mensaje, imagen);
+
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Correo enviado a: " + correoDestino);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "Error al enviar el correo: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
     }
 }
