@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
 @RestController
-    @Transactional
+@Transactional
 @CrossOrigin(origins = "http://localhost:5174") //problemas de cors
 @RequestMapping("/api")
 public class AutoController {
