@@ -16,8 +16,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "auto_imagenes")
-public class AutoImagenes {
-
+public class AutoImage { 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -25,8 +24,8 @@ public class AutoImagenes {
     @Column(name = "auto_id")
     private int autoId;
 
-    @Column(name = "url")
-    @NotEmpty(message = "La URL de la imagen no puede estar vacía")
-    private String url;
+    @Column(name = "name")
+    @NotEmpty(message = "El nombre de la imagen no puede estar vacio")
+    private String name;
 
 }

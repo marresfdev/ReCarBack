@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Data;
 
 /**
@@ -24,7 +25,7 @@ import lombok.Data;
 @Table(name = "auto")
 public class Auto {
 
-    @Id
+     @Id
     private int id;
 
     @Column(name = "no_inv")
@@ -77,9 +78,17 @@ public class Auto {
     @Column(name = "fecha_registro")
     private LocalDateTime fechaRegistro = LocalDateTime.now(); // Fecha de registro al momento de la creación
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    // Relación OneToMany con AutoImage
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "auto_id")
-    private List<AutoImagenes> imagenes;
+    @JsonIgnore // Evitar que las imágenes se incluyan en la respuesta JSON
+    private List<AutoImage> imagenes;
+
+    // Método que devuelve las URLs completas de las imágenes
+    public List<String> getImagenesUrls() {
+        return imagenes.stream()
+                       .map(image -> "http://localhost:8080/images/" + image.getName()) // Construye la URL completa para cada imagen
+                       .collect(Collectors.toList());
+    }
 
 }
-
