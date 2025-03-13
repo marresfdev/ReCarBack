@@ -23,8 +23,8 @@ public class EmailController {
 
     @PostMapping("/email")
     public ResponseEntity<Map<String, String>> enviarCorreo(@RequestParam String name, @RequestParam String email, @RequestParam String message) {
-        String asunto = "Página Web ReCarMotors";
-        String mensaje = "Cliente: "+ name + "\nContacto: "+ email+ "\nMensaje: "+ message;
+        String asunto = "Página Web ReCarMotors - Apartado de contactanos";
+        String mensaje = "Nombre de cliente: "+ name + "\nContacto: "+ email+ "\nMensaje: "+ message;
         emailService.enviarCorreo(correoDestino, asunto, mensaje);
         //return "Correo enviado a: " + correoDestino;
         
@@ -41,8 +41,8 @@ public class EmailController {
             @RequestParam("imagen") MultipartFile imagen) {
 
         try {
-            String asunto = "Página Web ReCarMotors";
-            String mensaje = "Cliente: " + contacto;
+            String asunto = "Página Web ReCarMotors - Revisión de Buró de Crédito";
+            String mensaje = "Contacto de cliente: " + contacto;
 
             emailService.enviarCorreoConImagen(correoDestino, asunto, mensaje, imagen);
 
