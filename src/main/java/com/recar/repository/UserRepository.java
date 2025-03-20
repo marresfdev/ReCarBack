@@ -2,6 +2,7 @@ package com.recar.repository;
 
 import com.recar.entity.User;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /*
@@ -14,6 +15,6 @@ import org.springframework.stereotype.Repository;
  * @author fonse
  */
 @Repository
-public interface UserRepository {
+public interface UserRepository extends JpaRepository<User, String> { // 👈 Agrega JpaRepository
     Optional<User> findByCorreo(String correo);
 }

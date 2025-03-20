@@ -4,10 +4,13 @@
  */
 package com.recar.dto;
 
+import lombok.Data;
+
 /**
  *
  * @author fonse
  */
+@Data
 public class LoginRequest {
     private String correo;
     private String password;

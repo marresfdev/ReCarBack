@@ -4,12 +4,13 @@
  */
 package com.recar.provider;
 
+import io.jsonwebtoken.Jwts;
 import java.util.Date;
 import java.util.stream.Collectors;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
      private final String SECRET_KEY = "mi_secreto_super_seguro";
-/*
+
     public String generateToken(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return Jwts.builder()
@@ -32,5 +33,4 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
     }
-*/
 }

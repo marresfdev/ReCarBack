@@ -10,8 +10,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Objects;
 import java.util.Set;
 import lombok.Data;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 /**
  *
@@ -19,12 +21,12 @@ import lombok.Data;
  */
 @Entity
 @Data
-@Table(name="users")
+@Table(name = "users")
 public class User {
     @Id
-    private String username;
+    private String correo; // Ahora el ID es el correo
 
-    private String correo;
+    private String username;
     private boolean enabled;
     private String password;
     private String token;
@@ -32,4 +34,17 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Authority> authorities;
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(correo); // Usar correo como identificador
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return Objects.equals(correo, user.correo);
+    }
 }
+

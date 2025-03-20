@@ -8,6 +8,9 @@ import com.recar.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,24 +26,33 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-       @Autowired
+    
+    @Autowired
     private CustomUserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf().disable()
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .userDetailsService(userDetailsService)
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-                .httpBasic(Customizer.withDefaults())
-                .build();
+        http
+            .csrf(csrf -> csrf.disable()) // Deshabilita CSRF si no usas formularios
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/auth/**").permitAll() // Permitir acceso al registro y login
+                .requestMatchers("/api/admin/**").hasRole("ADMIN") // Protege las rutas admin
+                .anyRequest().authenticated() // Todas las demás requieren autenticación
+            )
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .userDetailsService(userDetailsService)
+            .httpBasic(httpBasic -> httpBasic.disable()); // Desactiva HTTP Basic si usas JWT
+
+        return http.build();
+    }
+
+
+    @Bean
+    public AuthenticationManager authenticationManager(PasswordEncoder passwordEncoder, CustomUserDetailsService userDetailsService) {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(authProvider);
     }
 
     @Bean
