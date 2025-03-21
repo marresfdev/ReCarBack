@@ -79,7 +79,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
         User newUser = userService.registerUser(request);
-        return ResponseEntity.ok("Usuario registrado con éxito: " + newUser.getUsername());
+        return ResponseEntity.ok("Usuario registrado con éxito: " + newUser.getNombre());
     }
 
 }

@@ -29,7 +29,7 @@ public class Authority {
     private String authority;
 
     @ManyToOne
-    @JoinColumn(name = "username", referencedColumnName = "username", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false) // Se cambia a "user_id"
     private User user;
 
     @Override
@@ -45,3 +45,4 @@ public class Authority {
         return Objects.equals(id, authority.id);
     }
 }
+

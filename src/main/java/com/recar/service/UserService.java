@@ -39,7 +39,8 @@ public class UserService {
 
     // Crear usuario sin guardar aún
     User user = new User();
-    user.setUsername(request.getUsername());
+    user.setNombre(request.getNombre());
+    user.setApellidos(request.getApellidos());
     user.setCorreo(request.getCorreo());
     user.setPassword(passwordEncoder.encode(request.getPassword()));
     user.setEnabled(true);
