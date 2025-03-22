@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/getAllAutos").permitAll() // Permitir este endpoint público
                 .requestMatchers("/api/getAuto/**").permitAll() // Permitir obtener un auto específico
                 .requestMatchers("/api/calcularCredito/**").permitAll()
-                .requestMatchers("/api/emailBuro/**").permitAll()
+                .requestMatchers("/api/emailBuro/**","/api/email/**").permitAll()
                 .requestMatchers("/images/**").permitAll() // 🔥 PERMITE ACCESO A IMÁGENES
                 .anyRequest().authenticated()
             )

@@ -22,13 +22,16 @@ public class EmailController {
     private final String correoDestino = "2021371037@uteq.edu.mx";
 
     @PostMapping("/email")
-    public ResponseEntity<Map<String, String>> enviarCorreo(@RequestParam String name, @RequestParam String email, @RequestParam String message) {
-        String asunto = "Página Web ReCarMotors - Apartado de contactanos";
-        String mensaje = "Nombre de cliente: "+ name + "\nContacto: "+ email+ "\nMensaje: "+ message;
+    public ResponseEntity<Map<String, String>> enviarCorreo(@RequestBody Map<String, String> requestBody) {
+        String name = requestBody.get("name");
+        String email = requestBody.get("email");
+        String message = requestBody.get("message");
+
+        String asunto = "Página Web ReCarMotors - Apartado de Contáctanos";
+        String mensaje = "Nombre de cliente: " + name + "\nContacto: " + email + "\nMensaje: " + message;
+
         emailService.enviarCorreo(correoDestino, asunto, mensaje);
-        //return "Correo enviado a: " + correoDestino;
-        
-        // Usamos un HashMap para la respuesta
+
         Map<String, String> response = new HashMap<>();
         response.put("message", "Correo enviado");
         return ResponseEntity.ok().body(response);
