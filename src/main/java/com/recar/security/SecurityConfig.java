@@ -44,6 +44,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/login", "/api/auth/register").permitAll() // Permitimos estas rutas sin autenticación
                 .requestMatchers("/api/getAllAutos").permitAll() // Permitir este endpoint público
                 .requestMatchers("/api/getAuto/**").permitAll() // Permitir obtener un auto específico
+                .requestMatchers("/api/calcularCredito/**").permitAll()
+                .requestMatchers("/api/emailBuro/**").permitAll()
                 .requestMatchers("/images/**").permitAll() // 🔥 PERMITE ACCESO A IMÁGENES
                 .anyRequest().authenticated()
             )

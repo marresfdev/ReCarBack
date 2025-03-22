@@ -30,7 +30,7 @@ public class EmailController {
         
         // Usamos un HashMap para la respuesta
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Correo enviado a: " + correoDestino);
+        response.put("message", "Correo enviado");
         return ResponseEntity.ok().body(response);
     }
     
@@ -47,7 +47,7 @@ public class EmailController {
             emailService.enviarCorreoConImagen(correoDestino, asunto, mensaje, imagen);
 
             Map<String, String> response = new HashMap<>();
-            response.put("message", "Correo enviado a: " + correoDestino);
+            response.put("message", "Correo enviado");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             Map<String, String> response = new HashMap<>();
